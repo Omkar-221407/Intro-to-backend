@@ -1,0 +1,256 @@
+{
+  "info": {
+    "_postman_id": "b3e94a82-7f28-4e58-9b87-123456789abc",
+    "name": "Backend Tutorial - Node.js Express MongoDB",
+    "description": "Postman API Collection for testing all CRUD and Authentication endpoints.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:5000",
+      "type": "string"
+    },
+    {
+      "key": "userId",
+      "value": "REPLACE_WITH_USER_ID",
+      "type": "string"
+    },
+    {
+      "key": "itemId",
+      "value": "REPLACE_WITH_ITEM_ID",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "General & Health",
+      "item": [
+        {
+          "name": "Root Welcome & Directory",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/",
+              "host": ["{{baseUrl}}"],
+              "path": [""]
+            },
+            "description": "Returns welcome message and endpoint index."
+          }
+        },
+        {
+          "name": "Health Check",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/health",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "health"]
+            },
+            "description": "Checks server health and uptime."
+          }
+        }
+      ]
+    },
+    {
+      "name": "User APIs (Auth & CRUD)",
+      "item": [
+        {
+          "name": "1. Register User (POST - Create)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Alice Johnson\",\n  \"email\": \"alice@example.com\",\n  \"password\": \"supersecret123\",\n  \"age\": 22\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/users/register",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "users", "register"]
+            },
+            "description": "Registers a new user and hashes their password before storing in MongoDB."
+          }
+        },
+        {
+          "name": "2. Login User (POST - Auth)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"alice@example.com\",\n  \"password\": \"supersecret123\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/users/login",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "users", "login"]
+            },
+            "description": "Authenticates user credentials by comparing passwords with bcryptjs."
+          }
+        },
+        {
+          "name": "3. Get All Users (GET - Read All)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/users",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "users"]
+            },
+            "description": "Fetches all users from MongoDB (passwords excluded)."
+          }
+        },
+        {
+          "name": "4. Get User by ID (GET - Read One)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/users/{{userId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "users", "{{userId}}"]
+            },
+            "description": "Fetches a single user by MongoDB _id."
+          }
+        },
+        {
+          "name": "5. Update User (PUT - Update)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Alice J. Smith\",\n  \"age\": 23\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/users/{{userId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "users", "{{userId}}"]
+            },
+            "description": "Updates an existing user's details by MongoDB _id."
+          }
+        },
+        {
+          "name": "6. Delete User (DELETE - Delete)",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/users/{{userId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "users", "{{userId}}"]
+            },
+            "description": "Removes a user by MongoDB _id."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Item APIs (Resource CRUD)",
+      "item": [
+        {
+          "name": "1. Create Item (POST - Create)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Mechanical Keyboard\",\n  \"description\": \"RGB hot-swappable mechanical keyboard\",\n  \"category\": \"Electronics\",\n  \"price\": 89.99,\n  \"inStock\": true\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/items",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "items"]
+            },
+            "description": "Creates a new item record in MongoDB."
+          }
+        },
+        {
+          "name": "2. Get All Items (GET - Read All)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/items",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "items"]
+            },
+            "description": "Retrieves all items stored in MongoDB."
+          }
+        },
+        {
+          "name": "3. Get Item by ID (GET - Read One)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/items/{{itemId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "items", "{{itemId}}"]
+            },
+            "description": "Retrieves a single item by its MongoDB _id."
+          }
+        },
+        {
+          "name": "4. Update Item (PUT - Update)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"price\": 79.99,\n  \"inStock\": true\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/items/{{itemId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "items", "{{itemId}}"]
+            },
+            "description": "Updates an existing item's fields by MongoDB _id."
+          }
+        },
+        {
+          "name": "5. Delete Item (DELETE - Delete)",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/items/{{itemId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "items", "{{itemId}}"]
+            },
+            "description": "Deletes an item by MongoDB _id."
+          }
+        }
+      ]
+    }
+  ]
+}
